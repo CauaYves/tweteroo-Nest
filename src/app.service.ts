@@ -2,11 +2,30 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { createTweetDto } from './dto/create-tweet.dto';
 import { unauthorizedError } from './errors/unauthorized-error';
+import { tweetDto } from './dto/tweet.dto';
 
 @Injectable()
 export class AppService {
-  getTweetsFromUsernameService() {
-    throw new Error('Method not implemented.');
+  getTweetsFromUsernameService(username: string) {
+    const tweetsFromUser: tweetDto[] = [];
+    let avatar: string = ''
+    this.users.forEach((user) => {
+      if(user.username === username){
+        avatar = user.avatar
+      }
+    })
+    this.tweets.forEach((tweet) => {
+      if(tweet.username === username){
+        const data = {
+          tweet: tweet.tweet,
+          avatar: avatar,
+          username: tweet.username
+        }
+        tweetsFromUser.push(data)
+      }
+    })
+    console.log(tweetsFromUser)
+    return tweetsFromUser;
   }
   private tweets: createTweetDto[] = [];
   private users: CreateUserDto[] = [];

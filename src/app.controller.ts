@@ -22,9 +22,9 @@ export class AppController {
     return "I'm okay!";
   }
 
-  @Get()
-  getTweetFromUsername() {
-    return this.appService.getTweetsFromUsernameService()
+  @Get('tweets/:username')
+  getTweetFromUsername(@Param('username') username: string) {
+    return this.appService.getTweetsFromUsernameService(username)
   }
 
   @Get('tweets')
