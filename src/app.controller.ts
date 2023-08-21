@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Get,
   Param,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
@@ -28,8 +29,8 @@ export class AppController {
   }
 
   @Get('tweets')
-  getTweets(@Param() params: tweetParams) {
-    return this.appService.getTweetsService(Number(params.page))
+  getTweets(@Query('page') page: string) {
+    return this.appService.getTweetsService(Number(page));
   }
   @Post('sign-up')
   createUser(
@@ -55,7 +56,6 @@ export class AppController {
       this.appService.createTweetService(createTweetDto.tweet,createTweetDto.username,);
       return res.sendStatus(HttpStatus.CREATED);
     }catch(error){
-      console.log(error)
       if(error.name === 'UnauthorizedError') return res.sendStatus(HttpStatus.UNAUTHORIZED);
     }
   }
